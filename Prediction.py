@@ -1,8 +1,8 @@
 # coding: utf-8
 
-# # CS579: Assignment 1
+# 
 #
-# In this assignment, we'll implement community detection and link prediction algorithms using Facebook "like" data.
+# Implemented community detection and link prediction algorithms using Facebook "like" data.
 #
 # The file `edges.txt.gz` indicates like relationships between facebook users. This was collected using snowball sampling: beginning with the user "Bill Gates", I crawled all the people he "likes", then, for each newly discovered user, I crawled all the people they liked.
 #
@@ -24,7 +24,6 @@ import urllib.request
 def example_graph():
     """
     Create the example graph from class. Used for testing.
-    Do not modify.
     """
     g = nx.Graph()
     g.add_edges_from([('A', 'B'), ('A', 'C'), ('B', 'C'), ('B', 'D'), ('D', 'E'), ('D', 'F'), ('D', 'G'), ('E', 'F'), ('G', 'F')])
@@ -39,9 +38,7 @@ def bfs(graph, root, max_depth):
     This means that nodes greather than max_depth distance from the root will not
     appear in the result.
 
-    You may use these two classes to help with this implementation:
-      https://docs.python.org/3.5/library/collections.html#collections.defaultdict
-      https://docs.python.org/3.5/library/collections.html#collections.deque
+  
 
     Params:
       graph.......A networkx Graph
@@ -74,7 +71,7 @@ def bfs(graph, root, max_depth):
     >>> sorted((node, sorted(parents)) for node, parents in node2parents.items())
     [('B', ['D']), ('D', ['E']), ('F', ['E']), ('G', ['D', 'F'])]
     """
-    ###TODO
+    
     
     value = 0
     visited = set()
@@ -118,7 +115,7 @@ def complexity_of_bfs(V, E, K):
     >>> type(v) == int or type(v) == float
     True
     """
-    ###TODO
+    
     return V+E
     pass
 
@@ -237,7 +234,7 @@ def approximate_betweenness(graph, max_depth):
     >>> sorted(approximate_betweenness(example_graph(), 2).items())
     [(('A', 'B'), 2.0), (('A', 'C'), 1.0), (('B', 'C'), 2.0), (('B', 'D'), 6.0), (('D', 'E'), 2.5), (('D', 'F'), 2.0), (('D', 'G'), 2.5), (('E', 'F'), 1.5), (('F', 'G'), 1.5)]
     """
-    ###TODO
+    
     c=Counter()
     for items in graph.nodes():
         node2distances,node2num_paths,node2parents=bfs(graph, items, max_depth)
@@ -266,16 +263,15 @@ def is_approximation_always_right():
     >>> type(s)
     <class 'str'>
     """
-    ###TODO
+    
     return 'no'
     pass
 
 
 def partition_girvan_newman(graph, max_depth):
     """
-    Use your approximate_betweenness implementation to partition a graph.
-    Unlike in class, here you will not implement this recursively. Instead,
-    just remove edges until more than one component is created, then return
+    Use approximate_betweenness implementation to partition a graph.
+    Just remove edges until more than one component is created, then return
     those components.
     That is, compute the approximate betweenness of all edges, and remove
     them until multiple comonents are created.
@@ -301,7 +297,7 @@ def partition_girvan_newman(graph, max_depth):
     >>> sorted(components[1].nodes())
     ['D', 'E', 'F', 'G']
     """
-    ###TODO
+    
     x=1
     
     G = graph.copy()
@@ -365,7 +361,7 @@ def volume(nodes, graph):
     >>> volume(['A', 'B', 'C'], example_graph())
     4
     """
-    ###TODO
+    
     volume = 0
     edges = graph.edges()
     for e in edges:
@@ -391,7 +387,7 @@ def cut(S, T, graph):
     >>> cut(['A', 'B', 'C'], ['D', 'E', 'F', 'G'], example_graph())
     1
     """
-    ###TODO
+    
     cut = 0
     edges = graph.edges()
     for e in edges:
@@ -415,7 +411,7 @@ def norm_cut(S, T, graph):
       An float representing the normalized cut value
 
     """
-    ###TODO
+    
     sVolume = float(volume(S, graph))
     tVolume = float(volume(T, graph))
     c = cut(S, T, graph)
@@ -443,7 +439,7 @@ def score_max_depths(graph, max_depths):
       norm_cut value obtained by the partitions returned by
       partition_girvan_newman. See Log.txt for an example.
     """
-    ###TODO
+    
     nCut = []
     g=graph.copy()
     for i in max_depths:
@@ -488,7 +484,7 @@ def make_training_graph(graph, test_node, n):
     >>> sorted(train_graph.neighbors('D'))
     ['F', 'G']
     """
-    ###TODO
+    
     GCopy = graph.copy()
     edges_to_rem = graph.edges(test_node)
     e=sorted(edges_to_rem)[:n]
@@ -524,7 +520,7 @@ def jaccard(graph, node, k):
     >>> jaccard(train_graph, 'D', 2)
     [(('D', 'E'), 0.5), (('D', 'A'), 0.0)]
     """
-    ###TODO
+    
     neighbors = set(graph.neighbors(node))
     nodes = sorted(graph.nodes())
     resultScores  = []
@@ -582,7 +578,7 @@ def path_score(graph, root, k, beta):
     >>> path_score(train_graph, 'D', k=4, beta=.5)
     [(('D', 'F'), 0.5), (('D', 'A'), 0.25), (('D', 'C'), 0.25)]
     """
-    ###TODO
+    
     resultScore=[]
     node2distances, node2num_paths, node2parents = bfs(graph, root, math.inf)
     nodes = set(graph.nodes())-set(graph.neighbors(root))
@@ -612,8 +608,7 @@ def evaluate(predicted_edges, graph):
 
     >>> evaluate([('D', 'E'), ('D', 'A')], example_graph())
     0.5
-    """
-    ###TODO
+    
     p_edge = len(predicted_edges)
     has_edge = len([x for x in predicted_edges if graph.has_edge(*x)])
     eval = float(has_edge/p_edge)
